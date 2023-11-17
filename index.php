@@ -219,6 +219,7 @@ elseif (isset($_POST['lgn_btn'])) {
             session_start();
             $_SESSION['user_role'] = $data['Role'];
             $_SESSION['email'] = $data['Email'];
+            $_SESSION['username'] = $data['Username'];
 
             if ($data['Role'] == "Admin") {
                 $_SESSION['key'] = "AdminKey";
