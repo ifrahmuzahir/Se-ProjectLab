@@ -47,7 +47,7 @@ if (isset($_GET["added"])) {
             </thead>
             <tbody>
                 <?php
-                $fetchingdata = mysqli_query($db, "SELECT * FROM electiontable") or die(mysqli_error($db));
+                $fetchingdata = mysqli_query($db, "SELECT * FROM electiontable WHERE StartingDate >= CURDATE()") or die(mysqli_error($db));
                 $isanyElectionAdded = mysqli_num_rows($fetchingdata);
                 if ($isanyElectionAdded > 0) {
                     $sno = 1;

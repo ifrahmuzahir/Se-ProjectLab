@@ -20,7 +20,7 @@
     }
     elseif(isset($_GET['logoutPage']))
     {
-        require_once("inc\logout.php");
+        require_once("logout.php");
     }
 ?>
 

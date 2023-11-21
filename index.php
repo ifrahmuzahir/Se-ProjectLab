@@ -220,6 +220,7 @@ elseif (isset($_POST['lgn_btn'])) {
             $_SESSION['user_role'] = $data['Role'];
             $_SESSION['email'] = $data['Email'];
             $_SESSION['username'] = $data['Username'];
+            $_SESSION['user_id'] = $data['ID'];
 
             if ($data['Role'] == "Admin") {
                 $_SESSION['key'] = "AdminKey";
