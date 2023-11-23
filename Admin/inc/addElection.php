@@ -95,7 +95,7 @@ if (isset($_POST['addELectionbtn'])) {
     $date2 = date_create($starting_date);
     $diff = date_diff($date1, $date2);
 
-    if ($diff->format("%R%a") > 0) {
+    if ((int)$diff->format("%R%a") > 0) {
         $status = "Inactive";
     } else {
         $status = "Active";

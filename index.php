@@ -1,3 +1,43 @@
+<?php
+require_once("admin/inc/config.php");
+
+$fetchingElections = mysqli_query($db, "SELECT * FROM electiontable") or die(mysqli_error($db));
+while ($data = mysqli_fetch_assoc($fetchingElections)) {
+	$starting_date = $data['StartingDate'];
+	$ending_date = $data['EndingDate'];
+	$curr_date = date('Y-m-d');
+	$election_Id = $data['ElectionID'];
+	$status = $data['Status'];
+
+	if ($status == 'Active')
+	{
+		$date1 = date_create($curr_date);
+		$date2 = date_create($ending_date);
+		$diff = date_diff($date1, $date2);
+		//echo var_dump((int)$diff->format("%R%a"));
+		if ((int)$diff->format("%R%a") < 0) 
+		{
+			//echo "Expired";
+			//Update Status In DATABASE
+			mysqli_query($db,"UPDATE electiontable SET Status = 'Expired' WHERE ElectionID = '".$election_Id."'") or die(mysqli_error($db));
+		} 
+	} 
+	else if ($status == 'Inactive') 
+	{
+		$date1 = date_create($curr_date);
+		$date2 = date_create($starting_date);
+		$diff = date_diff($date1, $date2);
+		//echo $diff->format("%R%a");
+		if ((int)$diff->format("%R%a") <= 0) 
+		{
+			//echo "Active";
+			// UPDATE STATUS IN DATABSE
+			mysqli_query($db,"UPDATE electiontable SET Status = 'Active' WHERE ElectionID = '".$election_Id."'") or die(mysqli_error($db));
+		} 
+	}
+}
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -68,7 +108,7 @@
 							Already have an account? <a href="?index.php" class="ml-2 text-white">Sign In</a>
 						</div>
 					</div>
-				<?php
+					<?php
 				} else {
 					?>
 					<div class="d-flex justify-content-center form_container">
@@ -177,8 +217,7 @@ if (isset($_POST['sign_up_btn'])) {
 		<script>location.assign("index.php?sign-up=1&registered=1");</script>
 		<?php
 
-	} 
-	else if ($su_username != null & $su_password != null & $su_role == "Admin") {
+	} else if ($su_username != null & $su_password != null & $su_role == "Admin") {
 		//echo"Hello Data";
 		//mysqli_query($db, "INSERT INTO admintable(Username, Password, Email,Role, Age, Active) VALUES('" . $su_username . "', '" . $su_password . "', '" . $su_email . "', '" . $su_role . "', '" . $su_age . "', '" . $su_active . "')") or die(mysqli_error($db));
 		$insert_user_query = "INSERT INTO user (Username, Password, Email, Role, Age, Active)
@@ -192,8 +231,8 @@ if (isset($_POST['sign_up_btn'])) {
 		$insert_voter_query = "INSERT INTO admintable (AdminID, Username,Email, Age, Active)
 			 VALUES ('$last_user_id', '$su_username', '$su_email','$su_age', '$su_active')";
 		mysqli_query($db, $insert_voter_query) or die(mysqli_error($db));
-		
-		
+
+
 		?>
 			<script>location.assign("index.php?sign-up=1&registered=1");</script>
 		<?php
@@ -203,44 +242,43 @@ if (isset($_POST['sign_up_btn'])) {
 			<script>location.assign("index.php?sign-up=1&invalid=1");</script>
 		<?php
 	}
-} 
-elseif (isset($_POST['lgn_btn'])) {
-    $password = mysqli_real_escape_string($db, $_POST['password']);
-    $email = mysqli_real_escape_string($db, $_POST['email']);
+} elseif (isset($_POST['lgn_btn'])) {
+	$password = mysqli_real_escape_string($db, $_POST['password']);
+	$email = mysqli_real_escape_string($db, $_POST['email']);
 
-    // Fetch user data based on the email
-    $fetchingData = mysqli_query($db, "SELECT * FROM user WHERE Email = '$email'") or die(mysqli_error($db));
+	// Fetch user data based on the email
+	$fetchingData = mysqli_query($db, "SELECT * FROM user WHERE Email = '$email'") or die(mysqli_error($db));
 
-    if (mysqli_num_rows($fetchingData) > 0) {
-        $data = mysqli_fetch_assoc($fetchingData);
+	if (mysqli_num_rows($fetchingData) > 0) {
+		$data = mysqli_fetch_assoc($fetchingData);
 
-        // Compare hashed password
-        if (sha1($password) == $data['Password']) {
-            session_start();
-            $_SESSION['user_role'] = $data['Role'];
-            $_SESSION['email'] = $data['Email'];
-            $_SESSION['username'] = $data['Username'];
-            $_SESSION['user_id'] = $data['ID'];
+		// Compare hashed password
+		if (sha1($password) == $data['Password']) {
+			session_start();
+			$_SESSION['user_role'] = $data['Role'];
+			$_SESSION['email'] = $data['Email'];
+			$_SESSION['username'] = $data['Username'];
+			$_SESSION['user_id'] = $data['ID'];
 
-            if ($data['Role'] == "Admin") {
-                $_SESSION['key'] = "AdminKey";
-                header("Location: admin/index.php?addHomePage=1");
-                exit();
-            } else if ($data['Role'] == "Voter") {
-                $_SESSION['key'] = "VotersKey";
-                header("Location: voters/index.php");
-                exit();
-            }
-        } else {
-            ?>
-            <script>location.assign("index.php?Invalid_Access=1");</script>
-            <?php
-        }
-    } else {
-        ?>
-        <script>location.assign("index.php?sign-up=1&notregistered=1");</script>
-        <?php
-    }
+			if ($data['Role'] == "Admin") {
+				$_SESSION['key'] = "AdminKey";
+				header("Location: admin/index.php?addHomePage=1");
+				exit();
+			} else if ($data['Role'] == "Voter") {
+				$_SESSION['key'] = "VotersKey";
+				header("Location: voters/index.php");
+				exit();
+			}
+		} else {
+			?>
+			<script>location.assign("index.php?Invalid_Access=1");</script>
+			<?php
+		}
+	} else {
+		?>
+		<script>location.assign("index.php?sign-up=1&notregistered=1");</script>
+		<?php
+	}
 }
 
 

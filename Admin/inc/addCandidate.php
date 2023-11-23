@@ -90,7 +90,7 @@ else if (isset($_GET["failed"])) {
                     <th scope="col">Photo</th>
                     <th scope="col">Name</th>
                     <th scope="col">Details</th>
-                    <th scope="col">Election</th>
+                    <th scope="col">ElectionName</th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>
