@@ -22,8 +22,12 @@
     {
         require_once("logout.php");
     }
+    elseif(isset($_GET['viewResults']))
+    {
+        require_once("inc/viewResults.php");
+    }
+   
 ?>
-
 <?php
-    require_once("inc/footer.php");
+     require_once("inc/footer.php");
 ?>

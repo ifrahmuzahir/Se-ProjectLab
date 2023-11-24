@@ -22,7 +22,7 @@
                     $sno = 1;
                     while ($row = mysqli_fetch_array($fetchingdata))
                     {
-
+                        $election_Id = $row['ElectionID'];
                         ?>
                         <tr>
                             <td><?php echo $sno++ ?></td>
@@ -32,7 +32,7 @@
                             <td><?php echo $row['EndingDate'] ?></td>
                             <td><?php echo $row['Status'] ?></td>
                             <td>
-                                <a href="#" class="btn btn-sm btn-success">View Results</a>
+                                <a href="index.php?viewResults=<?php echo $election_Id ?>" class="btn btn-sm btn-success">View Results</a>
                             </td>
                         </tr>
                         <?php
