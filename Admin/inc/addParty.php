@@ -6,6 +6,18 @@ if (isset($_GET["added"])) {
     </div>
     <?php
 }
+else if(isset($_GET["delete_id"])) 
+{
+    $d_id = $_GET['delete_id'];
+    $status = 0;
+    mysqli_query($db,"UPDATE party SET Status = '". $status ."' WHERE PartyID = '". $d_id ."' ") or die(mysqli_error($db));
+
+?>
+    <div class="alert alert-danger my-3" role="alert">
+        Party has been Deleted successfully!
+    </div>
+<?php
+}
 ?>
 
 
@@ -21,7 +33,7 @@ if (isset($_GET["added"])) {
                     required />
             </div>
            
-            <input type="submit" value="Add Election" name="addPartybtn" class="btn btn-success">
+            <input type="submit" value="Add Party" name="addPartybtn" class="btn btn-success">
         </form>
     </div>
     <div class="col-8">
@@ -40,13 +52,13 @@ if (isset($_GET["added"])) {
             </thead>
             <tbody>
                 <?php
-                $fetchingdata = mysqli_query($db, "SELECT * FROM party") or die(mysqli_error($db));
+                $fetchingdata = mysqli_query($db, "SELECT * FROM party WHERE Status = 1") or die(mysqli_error($db));
                 $isanyPartyAdded = mysqli_num_rows($fetchingdata);
                 if ($isanyPartyAdded > 0) {
                     $sno = 1;
                     while ($row = mysqli_fetch_array($fetchingdata))
                     {
-
+                        $party_Id = $row['PartyID'];
                         ?>
                         <tr>
                             <td><?php echo $sno++ ?></td>
@@ -57,7 +69,7 @@ if (isset($_GET["added"])) {
                             <td><?php echo $row['Status'] ?></td>
                             <td>
                                 <a href="#" class="btn btn-sm btn-warning">Edit</a>
-                                <a href="#" class="btn btn-sm btn-danger">Delete</a>
+                                <a href="#" class="btn btn-sm btn-danger" onclick="DeleteData(<?php echo $party_Id ;?>)">Delete</a>
                             </td>
                         </tr>
                         <?php
@@ -74,6 +86,18 @@ if (isset($_GET["added"])) {
         </table>
     </div>
 </div>
+
+<script>
+    const DeleteData = (p_id) =>
+    {
+        let c =confirm("Are you really want to Delete it?");
+        if(c == true)
+        {
+            location.assign("index.php?addPartyPage=1&delete_id=" + p_id);
+        }
+
+    }
+</script>
 
 <?php
 if (isset($_POST['addPartybtn'])) {

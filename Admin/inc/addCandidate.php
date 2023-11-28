@@ -88,30 +88,22 @@ else if(isset($_GET["delete_id"]))
                 <select class="form-control" name="party_id" required>
                     <option value=""> Party Affiliation </option>
                     <?php 
-                        $fetchingparty = mysqli_query($db,"SELECT * FROM party") or die(mysqli_error($db));
+                        $fetchingparty = mysqli_query($db,"SELECT * FROM party where Status = 1") or die(mysqli_error($db));
                         $isanyPartyAdded = mysqli_num_rows($fetchingparty);
                         if ($isanyPartyAdded > 0) 
                         {
                             while($row = mysqli_fetch_assoc($fetchingparty))
                             {
-                                $party_Id = $row['PartyID'];
-                                $party_name = $row['PartyName'];
-
-                                $fetchingcandidate=mysqli_query($db,"SELECT * FROM candidate where PartyID = '". $party_Id ."'") or die(mysqli_error($db));
-                                $addedCandidate = mysqli_num_rows($fetchingcandidate);
-                                if($addedCandidate < $allowed_candidate)
-                                {
-                                   
+                                $party_name = $row['PartyName'];        
                         ?>
                                 <option value=""><?php echo $party_name?></option>
                         <?php
-                                }
                             }
                         } 
                         else 
                         { 
                             ?>
-                            <option value="">Please add Party First!</option>
+                            <option value="">Please add election First!</option>
                             <?php
                         }
                     ?>
@@ -169,7 +161,7 @@ else if(isset($_GET["delete_id"]))
                             <td><?php echo $partyName ?></td>
                             <td>
                                 <a href="#" class="btn btn-sm btn-warning">Edit</a>
-                                <a href="#" class="btn btn-sm btn-danger" onclick="DeleteData(<?php echo $candidate_Id;?>)">Delete</a>
+                                <button class="btn btn-sm btn-danger" onclick="DeleteData(<?php echo $candidate_Id;?>)">Delete</button>
                             </td>
                         </tr>
                         <?php
