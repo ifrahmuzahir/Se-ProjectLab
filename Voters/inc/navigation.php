@@ -12,10 +12,7 @@
                     <a class="nav-link text-white" href="index.php?HomePage=1">Home</a>
                 </li>
                 <li class="nav-item mr-3">
-                    <a class="nav-link text-white" href="index.php?HomePage=1">CasteVote</a>
-                </li>
-                <li class="nav-item mr-3">
-                    <a class="nav-link text-white" href="index.php?viewResultsPage=1">View Results</a>
+                    <a class="nav-link text-white" href="index.php?CasteVote=1">CasteVote</a>
                 </li>
                 <li class="nav-item mr-3">
                     <a class="nav-link text-white" href="index.php?logoutPage=1">Logout</a>

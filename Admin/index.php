@@ -16,15 +16,15 @@
     }
     elseif(isset($_GET['addHomePage']))
     {
-        require_once("inc\homePage.php");
+        require_once("../homePage.php");
     }
     elseif(isset($_GET['logoutPage']))
     {
-        require_once("logout.php");
+        require_once("../logout.php");
     }
     elseif(isset($_GET['viewResults']))
     {
-        require_once("inc/viewResults.php");
+        require_once("../viewResults.php");
     }
    
 ?>

@@ -21,7 +21,7 @@
                     <a class="nav-link text-white" href="index.php?addPartyPage=1">Add Party</a>
                 </li>
                 <li class="nav-item mr-3">
-                    <a class="nav-link text-white" href="index.php?logoutPage=1">Logout</a>
+                    <a class="nav-link text-white" href="logout.php">Logout</a>
                 </li>
             </ul>
         </div>

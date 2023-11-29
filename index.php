@@ -266,7 +266,7 @@ if (isset($_POST['sign_up_btn'])) {
 				exit();
 			} else if ($data['Role'] == "Voter") {
 				$_SESSION['key'] = "VotersKey";
-				header("Location: voters/index.php");
+				header("Location: voters/index.php?HomePage=1");
 				exit();
 			}
 		} else {
