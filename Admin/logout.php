@@ -2,7 +2,6 @@
     session_start();
     session_destroy();
     session_unset();
-    // header("location: index.php");
+    header("Location: ../index.php");
+exit();
 ?>
-
-<script>location.assign("../index.php")</script>
