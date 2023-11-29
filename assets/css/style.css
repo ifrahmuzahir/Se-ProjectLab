@@ -16,3 +16,19 @@
 .page-footer{
     margin-bottom: 700px;
 }
+.winner-row {
+    background-color: #dff0d8; /* Light green background for the winner row */
+}
+
+/* Center the winner message */
+.winner-message {
+    text-align: center;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* Style the checkmark icon */
+.winner-icon {
+    color: #5cb85c; /* Green color for the checkmark */
+    margin-right: 5px;
+}
